@@ -1,0 +1,17 @@
+extends ../shared/layout
+
+block content
+    h2.title New Snippet
+    div.new-snippet
+        form(method="POST",enctype="/snippet/new")
+            div.form-control
+                span.description title
+                input(type="text",name="title")
+            div.form-control
+                span.description content
+                textarea.snippet-content(type="text",name="content")
+            div.form-control
+                span.description tags
+                input(type="text",name="tags")
+            div.form-control
+                button.submit(type="submit") Submit

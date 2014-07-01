@@ -1,0 +1,15 @@
+{
+    "name": "sibo.me",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "3.4.7",
+        "jade": "*",
+        "simple-mvc": "~0.0.9",
+        "mysql-dbhelper": "~0.0.1",
+        "underscore": "*"
+    }
+}

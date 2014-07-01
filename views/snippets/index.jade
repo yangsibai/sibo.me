@@ -1,0 +1,12 @@
+//
+   Created by massimo on 2014/7/1.
+
+extends  ../shared/layout
+
+block content
+    h2.title Snippets
+    div.snippets
+        ul
+            each snippet in snippets
+                li
+                    a(href='/snippets/single/'+snippet.id) #{snippet.title}

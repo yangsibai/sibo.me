@@ -1,0 +1,98 @@
+@import "reset.css";
+
+@color-primary: #333;
+@color-secondary: #666;
+@color-description: #888;
+@color-link: #37a;
+@color-link-hover: #fff;
+@color-link-hover-background: #37a;
+@color-border: #ddd;
+@color-glow-light: #4e78ff;
+
+@font-size-main-title: 40px;
+@font-size-title: 20px;
+@font-size-primary: 16px;
+@font-size-secondary: 14px;
+@font-size-desc: 12px;
+
+@margin-1: 40px;
+@margin-2: 20px;
+@margin-3: 10px;
+@margin-4: 5px;
+
+@text-shadow: 1px 1px 1px #F0F0F0;
+
+body {
+  padding: @margin-1;
+  color: @color-primary;
+}
+
+a {
+  color: @color-link;
+  text-decoration: none;
+  text-shadow: @text-shadow;
+}
+
+a:hover {
+  color: @color-link-hover;
+  background: @color-link-hover-background;
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+p {
+  margin-bottom: @margin-3;
+}
+
+.main-title {
+  font-size: @font-size-main-title;
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: @font-size-title;
+  margin-bottom: @margin-3;
+}
+
+.summary-item {
+  font-size: @font-size-primary;
+  margin-bottom: @margin-4;
+}
+
+.summary-item-pin-count {
+  font-size: @font-size-secondary;
+  margin-left: @margin-4;
+}
+
+input[type="text"], textarea {
+  border: 1px solid @color-border;
+  padding: @margin-4 @margin-3;
+}
+
+input[type="text"]:focus, textarea:focus {
+  box-shadow: 0 0 @margin-3 @color-glow-light;
+}
+
+.new-snippet {
+  margin-top: @margin-2;
+  .form-control {
+    display: block;
+    margin-bottom: @margin-3;
+    .description {
+      color: @color-secondary;
+      display: block;
+      margin-bottom: @margin-4;
+    }
+    .snippet-content {
+      width: 500px;
+      height: 400px;
+    }
+    .submit {
+      height: 30px;
+      width: 80px;
+      cursor: pointer;
+      padding: @margin-4 @margin-3;
+      color: @color-primary;
+    }
+  }
+}

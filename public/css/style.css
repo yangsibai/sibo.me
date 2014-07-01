@@ -1,0 +1,67 @@
+@import "reset.css";
+body {
+  padding: 40px;
+  color: #333333;
+}
+a {
+  color: #3377aa;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px #f0f0f0;
+}
+a:hover {
+  color: #ffffff;
+  background: #3377aa;
+  text-decoration: underline;
+  text-shadow: none;
+}
+p {
+  margin-bottom: 10px;
+}
+.main-title {
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.summary-item {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.summary-item-pin-count {
+  font-size: 14px;
+  margin-left: 5px;
+}
+input[type="text"],
+textarea {
+  border: 1px solid #dddddd;
+  padding: 5px 10px;
+}
+input[type="text"]:focus,
+textarea:focus {
+  box-shadow: 0 0 10px #4e78ff;
+}
+.new-snippet {
+  margin-top: 20px;
+}
+.new-snippet .form-control {
+  display: block;
+  margin-bottom: 10px;
+}
+.new-snippet .form-control .description {
+  color: #666666;
+  display: block;
+  margin-bottom: 5px;
+}
+.new-snippet .form-control .snippet-content {
+  width: 500px;
+  height: 400px;
+}
+.new-snippet .form-control .submit {
+  height: 30px;
+  width: 80px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #333333;
+}
