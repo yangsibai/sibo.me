@@ -1,17 +1,19 @@
-extends ../shared/layout
+extends ../shared/layout_snippet
 
 block content
-    h2.title New Snippet
     div.new-snippet
-        form(method="POST",enctype="/snippet/new")
-            div.form-control
-                span.description title
-                input(type="text",name="title")
-            div.form-control
-                span.description content
-                textarea.snippet-content(type="text",name="content")
-            div.form-control
-                span.description tags
-                input(type="text",name="tags")
-            div.form-control
-                button.submit(type="submit") Submit
+        h2.title New Snippet
+        div.form
+            form(method="POST",enctype="/snippet/new")
+                div.form-control
+                    span.description File name
+                    input(type="text",name="title")
+                div.form-control
+                    span.description Content
+                    textarea.snippet-content(type="text",name="content")
+                div.form-control
+                    span.description Tags
+                    input(type="text",name="tags")
+                    small.desc split tags by '|'
+                div.form-control
+                    button.submit(type="submit") Submit

@@ -1,11 +1,21 @@
 dbSnippet = require('../Dal/dbSnippet')
+marked = require("marked")
 
-exports.new = (snnippet, cb)->
-	if snnippet.title and snnippet.content and snnippet.tags
-		snnippet.tags = snnippet.tags.split('|')
-		dbSnippet.new(snnippet, cb)
+###
+    新建
+###
+exports.new = (snippet, cb)->
+	if snippet.title and snippet.content and snippet.tags
+		if snippet.title.indexOf('.md') > 0
+			snippet.html = marked(snippet.content)
+		else
+			snippet.html = snippet.content
+		snippet.tags = snippet.tags.split('|')
+		dbSnippet.new(snippet, cb)
 
-
+###
+    单条
+###
 exports.single = (id, cb)->
 	if id > 0
 		dbSnippet.single id, cb

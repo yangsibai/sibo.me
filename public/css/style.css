@@ -1,7 +1,23 @@
 @import "reset.css";
+html,
 body {
-  padding: 40px;
+  width: 100%;
+  height: 100%;
+}
+body {
   color: #333333;
+  background-color: #f8f8f8;
+}
+.container {
+  margin: 40px;
+  height: 100%;
+}
+.snip-container {
+  margin: 10px;
+  height: 100%;
+}
+.snip-container .title {
+  font-size: 16px;
 }
 a {
   color: #3377aa;
@@ -21,17 +37,22 @@ p {
   font-size: 40px;
   padding-bottom: 20px;
 }
-.title {
+.snippets .title {
   font-size: 20px;
   margin-bottom: 10px;
 }
-.summary-item {
-  font-size: 16px;
-  margin-bottom: 5px;
+.snippets .new {
+  margin-bottom: 20px;
 }
-.summary-item-pin-count {
-  font-size: 14px;
-  margin-left: 5px;
+.snippets .list .item {
+  margin-bottom: 10px;
+}
+.snippets .list .item .link {
+  font-size: 16px;
+}
+.snippets .list .item .time {
+  font-size: 12px;
+  margin-left: 10px;
 }
 input[type="text"],
 textarea {
@@ -43,25 +64,85 @@ textarea:focus {
   box-shadow: 0 0 10px #4e78ff;
 }
 .new-snippet {
+  margin: 40px 20px;
+}
+.new-snippet .form {
   margin-top: 20px;
 }
-.new-snippet .form-control {
+.new-snippet .form .form-control {
   display: block;
   margin-bottom: 10px;
 }
-.new-snippet .form-control .description {
+.new-snippet .form .form-control .description {
   color: #666666;
   display: block;
   margin-bottom: 5px;
 }
-.new-snippet .form-control .snippet-content {
-  width: 500px;
-  height: 400px;
+.new-snippet .form .form-control input {
+  width: 300px;
+  border-radius: 5px;
 }
-.new-snippet .form-control .submit {
+.new-snippet .form .form-control .snippet-content {
+  height: 400px;
+  border-radius: 5px;
+  width: 700px;
+}
+.new-snippet .form .form-control .submit {
   height: 30px;
   width: 80px;
   cursor: pointer;
   padding: 5px 10px;
+  color: #ffffff;
+  background-color: #4e78ff;
+  outline: none;
+  border: none;
+}
+.new-snippet .form .form-control .submit:hover {
+  color: #4e78ff;
+  background-color: #ffffff;
+  border: 1px solid #4e78ff;
+}
+.new-snippet .form .form-control .desc {
+  margin-left: 10px;
+  font-size: 12px;
+}
+.snippet {
+  width: 700px;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  margin-left: -350px;
+  background-color: #f0f0f0;
+  padding: 10px 20px;
+}
+.snippet .title {
+  font-size: 30px;
   color: #333333;
+  margin-bottom: 10px;
+}
+.snippet .info {
+  color: #666666;
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+.snippet .info .tags {
+  display: inline;
+}
+.snippet .info .tags .tag {
+  display: inline;
+  cursor: pointer;
+  margin-left: 5px;
+  padding: 0 5px;
+  text-decoration: underline;
+}
+.snippet .content {
+  font-size: 16px;
+  color: #333333;
+}
+.snippet .content pre {
+  border-left: 3px solid #4b82dd;
+  background: #ccc;
+  padding: 20px;
+  line-height: 1.5em;
+  font-size: 16px;
 }

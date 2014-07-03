@@ -5,9 +5,9 @@ _ = require('underscore')
 exports.new = (snippet, cb)->
 	sql = """
 		insert into snippet(
-			title,content,addTime,updateTime,version,state
+			title,content,html,addTime,updateTime,version,state
 		)values(
-			?,?,now(),now(),1,0
+			?,?,?,now(),now(),1,0
 		)
 		"""
 	conn = dbHelper.createConnection dbConfig
@@ -15,6 +15,7 @@ exports.new = (snippet, cb)->
 	conn.insert sql, [
 		snippet.title
 		snippet.content
+		snippet.html
 	], (err, success, insertId)->
 		if err
 			conn.end()
@@ -25,7 +26,7 @@ exports.new = (snippet, cb)->
 		else
 			finished = _.after snippet.tags.length, ()->
 				conn.end()
-				cb null
+				cb null, insertId
 
 			for tag in snippet.tags
 				insertTag conn, insertId, tag, (err, success, insertId)->
@@ -34,7 +35,7 @@ exports.new = (snippet, cb)->
 					finished()
 
 exports.all = (cb)->
-	sql = """select id,title
+	sql = """select id,title,addTime
 	from snippet;"""
 	conn = dbHelper.createConnection dbConfig
 	conn.connect()
@@ -54,8 +55,23 @@ exports.single = (id, cb)->
 	conn.executeFirstRow sql, [
 		id
 	], (err, row)->
-		conn.end()
-		cb err, row
+		sql = """
+select t.id,t.name
+from snippet_tag st
+inner join tag t
+on st.tagId=t.id
+where st.snippetId=?;
+"""
+		if row
+			conn.execute sql, [
+				id
+			], (err, results)->
+				conn.end()
+				row.tags = results
+				cb err, row
+		else
+			conn.end()
+			cb err, row
 
 insertTag = (conn, snippetId, tag, cb)->
 	sql = "select id from tag where name=? limit 1"

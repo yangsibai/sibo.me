@@ -10,6 +10,7 @@
         "jade": "*",
         "simple-mvc": "~0.0.9",
         "mysql-dbhelper": "~0.0.1",
-        "underscore": "*"
+        "underscore": "*",
+        "marked": "*0.3.2"
     }
 }

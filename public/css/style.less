@@ -8,8 +8,13 @@
 @color-link-hover-background: #37a;
 @color-border: #ddd;
 @color-glow-light: #4e78ff;
+@color-btn-background: @color-glow-light;
+@color-btn: @color-link-hover;
+@color-btn-background-hover: @color-btn;
+@color-btn-hover: @color-btn-background;
 
 @font-size-main-title: 40px;
+@font-size-secondary-title: 30px;
 @font-size-title: 20px;
 @font-size-primary: 16px;
 @font-size-secondary: 14px;
@@ -22,9 +27,27 @@
 
 @text-shadow: 1px 1px 1px #F0F0F0;
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
-  padding: @margin-1;
   color: @color-primary;
+  background-color: #f8f8f8;
+}
+
+.container {
+  margin: @margin-1;
+  height: 100%;
+}
+
+.snip-container {
+  margin: @margin-3;
+  height: 100%;
+  .title {
+    font-size: @font-size-primary;
+  }
 }
 
 a {
@@ -49,19 +72,27 @@ p {
   padding-bottom: 20px;
 }
 
-.title {
-  font-size: @font-size-title;
-  margin-bottom: @margin-3;
-}
+.snippets {
+  .title {
 
-.summary-item {
-  font-size: @font-size-primary;
-  margin-bottom: @margin-4;
-}
-
-.summary-item-pin-count {
-  font-size: @font-size-secondary;
-  margin-left: @margin-4;
+    font-size: @font-size-title;
+    margin-bottom: @margin-3;
+  }
+  .new {
+    margin-bottom: @margin-2;
+  }
+  .list {
+    .item {
+      margin-bottom: @margin-3;
+      .link {
+        font-size: @font-size-primary;
+      }
+      .time {
+        font-size: @font-size-desc;
+        margin-left: @margin-3;
+      }
+    }
+  }
 }
 
 input[type="text"], textarea {
@@ -74,25 +105,86 @@ input[type="text"]:focus, textarea:focus {
 }
 
 .new-snippet {
-  margin-top: @margin-2;
-  .form-control {
-    display: block;
-    margin-bottom: @margin-3;
-    .description {
-      color: @color-secondary;
+  margin: @margin-1 @margin-2;
+  .form {
+    margin-top: @margin-2;
+    .form-control {
       display: block;
-      margin-bottom: @margin-4;
+      margin-bottom: @margin-3;
+      .description {
+        color: @color-secondary;
+        display: block;
+        margin-bottom: @margin-4;
+      }
+      input {
+        width: 300px;
+        border-radius: 5px;
+      }
+      .snippet-content {
+        height: 400px;
+        border-radius: 5px;
+        width: 700px;
+      }
+      .submit {
+        height: 30px;
+        width: 80px;
+        cursor: pointer;
+        padding: @margin-4 @margin-3;
+        color: @color-btn;
+        background-color: @color-btn-background;
+        outline: none;
+        border: none;
+      }
+      .submit:hover {
+        color: @color-btn-hover;
+        background-color: @color-btn-background-hover;
+        border: 1px solid @color-btn-hover;
+      }
+      .desc {
+        margin-left: @margin-3;
+        font-size: @font-size-desc;
+      }
     }
-    .snippet-content {
-      width: 500px;
-      height: 400px;
+  }
+}
+
+.snippet {
+  width: 700px;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  margin-left: -350px;
+  background-color: #f0f0f0;
+  padding: @margin-3 @margin-2;
+  .title {
+    font-size: @font-size-secondary-title;
+    color: @color-primary;
+    margin-bottom: @margin-3;
+  }
+  .info {
+    color: @color-secondary;
+    margin-bottom: @margin-2;
+    font-size: @font-size-desc;
+    .tags {
+      display: inline;
+      .tag {
+        display: inline;
+        cursor: pointer;
+        margin-left: @margin-4;
+        padding: 0 @margin-4;
+        text-decoration: underline;
+      }
     }
-    .submit {
-      height: 30px;
-      width: 80px;
-      cursor: pointer;
-      padding: @margin-4 @margin-3;
-      color: @color-primary;
+  }
+  .content {
+    font-size: @font-size-primary;
+    color: @color-primary;
+    pre {
+      border-left: 3px solid #4b82dd;
+      background: #ccc;
+      padding: @margin-2;
+      line-height: 1.5em;
+      font-size: @font-size-primary;
     }
   }
 }

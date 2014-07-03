@@ -1,9 +1,14 @@
 //
    Created by massimo on 2014/7/1.
 
-extends  ../shared/layout
+extends  ../shared/layout_snippet
 
 block content
-    h2.title #{snippet.title}
-    span #{snippet.addTime}
-    p #{snippet.content}
+    div.snippet
+        h2.title #{snippet.title}
+        div.info
+            span #{snippet.addTime}
+            ul.tags
+                - each tag in snippet.tags
+                    li.tag= tag.name
+        div.content !{snippet.html}
