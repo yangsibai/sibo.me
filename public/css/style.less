@@ -95,57 +95,58 @@ p {
   }
 }
 
-input[type="text"], textarea {
+input[type="text"], input[type="password"], textarea {
   border: 1px solid @color-border;
   padding: @margin-4 @margin-3;
 }
 
-input[type="text"]:focus, textarea:focus {
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
   box-shadow: 0 0 @margin-3 @color-glow-light;
 }
 
-.new-snippet {
-  margin: @margin-1 @margin-2;
-  .form {
-    margin-top: @margin-2;
-    .form-control {
+.form {
+  margin-top: @margin-2;
+  .form-control {
+    display: block;
+    margin-bottom: @margin-3;
+    .description {
+      color: @color-secondary;
       display: block;
-      margin-bottom: @margin-3;
-      .description {
-        color: @color-secondary;
-        display: block;
-        margin-bottom: @margin-4;
-      }
-      input {
-        width: 300px;
-        border-radius: 5px;
-      }
-      .snippet-content {
-        height: 400px;
-        border-radius: 5px;
-        width: 700px;
-      }
-      .submit {
-        height: 30px;
-        width: 80px;
-        cursor: pointer;
-        padding: @margin-4 @margin-3;
-        color: @color-btn;
-        background-color: @color-btn-background;
-        outline: none;
-        border: none;
-      }
-      .submit:hover {
-        color: @color-btn-hover;
-        background-color: @color-btn-background-hover;
-        border: 1px solid @color-btn-hover;
-      }
-      .desc {
-        margin-left: @margin-3;
-        font-size: @font-size-desc;
-      }
+      margin-bottom: @margin-4;
+    }
+    input {
+      width: 300px;
+      border-radius: 5px;
+    }
+    .snippet-content {
+      height: 400px;
+      border-radius: 5px;
+      width: 700px;
+    }
+    .submit {
+      height: 30px;
+      width: 80px;
+      cursor: pointer;
+      padding: @margin-4 @margin-3;
+      color: @color-btn;
+      background-color: @color-btn-background;
+      outline: none;
+      border: none;
+    }
+    .submit:hover {
+      color: @color-btn-hover;
+      background-color: @color-btn-background-hover;
+      border: 1px solid @color-btn-hover;
+    }
+    .desc {
+      margin-left: @margin-3;
+      font-size: @font-size-desc;
     }
   }
+}
+
+.new-snippet, .edit-snippet {
+  margin: @margin-1 @margin-2;
 }
 
 .snippet {
@@ -175,17 +176,33 @@ input[type="text"]:focus, textarea:focus {
         text-decoration: underline;
       }
     }
+    .operate {
+      margin-left: @margin-3;
+    }
   }
   .content {
     font-size: @font-size-primary;
     color: @color-primary;
+    line-height: 1.5em;
     pre {
-      border-left: 3px solid #4b82dd;
+      border-left: 5px solid #4b82dd;
       background: #ccc;
       padding: @margin-2;
-      line-height: 1.5em;
       font-size: @font-size-primary;
       word-break: break-word;
+      overflow: auto;
+    }
+  }
+}
+
+.auth {
+  .form-control {
+    .description {
+      margin-bottom: @margin-2;
+    }
+    input {
+      width: 200px;
+      height: 30px;
     }
   }
 }

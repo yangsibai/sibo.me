@@ -1,0 +1,22 @@
+//
+   Created by massimo on 2014/7/4.
+
+extends ../shared/layout_snippet
+
+block content
+    div.edit-snippet
+        h2.title Edit #{snippet.title}
+        div.form
+            form(method="POST",enctype="/snippet/edit/#{snippet.id}")
+                div.form-control
+                    span.description File name
+                    input(type="text",name="title",value=snippet.title)
+                div.form-control
+                    span.description Content
+                    textarea.snippet-content(type="text",name="content") #{snippet.content}
+                div.form-control
+                    span.description Tags
+                    input(type="text",name="tags",value=snippet.tags)
+                    small.desc split tags by '|'
+                div.form-control
+                    button.submit(type="submit") Update

@@ -11,4 +11,11 @@ block content
             ul.tags
                 - each tag in snippet.tags
                     li.tag= tag.name
-        div.content !{snippet.html}
+            a.operate(href="/snippets/edit/#{snippet.id}") Edit
+            a.operate(href="/snippets/delete/#{snippet.id}") Delete
+        if snippet.html
+            div.content !{snippet.html}
+        else
+            div.content
+                pre
+                    code #{snippet.content}

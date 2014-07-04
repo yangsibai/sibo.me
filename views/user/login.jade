@@ -1,0 +1,18 @@
+//
+   Created by massimo on 2014/7/4.
+
+extends ../shared/layout
+
+block content
+    div.auth
+        h2.title Auth
+        div.form
+            form(method="POST",enctype="/user/auth")
+                div.form-control
+                    span.description Name
+                    input(type="text",name="email")
+                div.form-control
+                    span.description Password
+                    input(type="password",name="password")
+                div.form-control
+                    button.submit(type="submit") Login

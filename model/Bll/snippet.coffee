@@ -1,4 +1,4 @@
-dbSnippet = require('../Dal/dbSnippet')
+dbSnippet = require('../dal/dbSnippet')
 marked = require("marked")
 
 ###
@@ -9,9 +9,20 @@ exports.new = (snippet, cb)->
 		if snippet.title.indexOf('.md') > 0
 			snippet.html = marked(snippet.content)
 		else
-			snippet.html = snippet.content
+			snippet.html = ""
 		snippet.tags = snippet.tags.split('|')
-		dbSnippet.new(snippet, cb)
+		dbSnippet.new snippet, cb
+
+###
+    更新
+###
+exports.update = (snippet, cb)->
+	if snippet.title.toLowerCase().indexOf('.md') > 0
+		snippet.html = marked(snippet.content)
+	else
+		snippet.html = ""
+	snippet.tags = snippet.tags.split('|')
+	dbSnippet.update snippet, cb
 
 ###
     单条
@@ -22,5 +33,17 @@ exports.single = (id, cb)->
 	else
 		cb new Error("invalid request")
 
-exports.all = (cb)->
-	dbSnippet.all cb
+###
+    delete
+###
+exports.delete = (id, cb)->
+	if id > 0
+		dbSnippet.delete id, cb
+	else
+		cb new Error("invalid request")
+
+###
+    列表
+###
+exports.list = (cb)->
+	dbSnippet.list cb
