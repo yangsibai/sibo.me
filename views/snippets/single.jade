@@ -3,7 +3,9 @@
 
 extends  ../shared/layout_snippet
 
+
 block content
+    link(rel="stylesheet",href="/js/google-code-prettify/prettify.css")
     div.snippet
         h2.title #{snippet.title}
         div.info
@@ -19,3 +21,11 @@ block content
             div.content
                 pre
                     code #{snippet.content}
+
+    script(src="http://code.jquery.com/jquery-1.7.2.min.js")
+    script(src="/js/google-code-prettify/prettify.js")
+    script.
+        $(document).ready(function() {
+             $('pre').addClass('prettyprint linenums');
+             prettyPrint();
+         });
