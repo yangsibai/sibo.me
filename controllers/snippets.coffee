@@ -23,6 +23,7 @@ exports.index = (req, res)->
 			for snippet in snippets
 				snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "index",
+				auth: req.session.auth
 				title: "All snippets"
 				snippets: snippets
 
@@ -39,6 +40,7 @@ exports.single = (req, res)->
 		else
 			snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "single",
+				auth:req.session.auth
 				title: snippet.title
 				snippet: snippet
 

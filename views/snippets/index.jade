@@ -6,8 +6,9 @@ extends  ../shared/layout_snippet
 block content
     div.snippets
         h2.secondary-title Snippets
-        div.new
-            a(href="/snippets/new") New
+        if auth
+            div.new
+                a(href="/snippets/new") New
         div.list
             ul
                 each snippet in snippets
