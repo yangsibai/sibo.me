@@ -110,9 +110,15 @@
         tags: tags
       }, function(err) {
         if (err) {
-          throw err;
+          return res.send({
+            code: 1,
+            message: err.message
+          });
         } else {
-          return res.redirect("/snippets/single/" + id);
+          return res.send({
+            code: 0,
+            message: "ok"
+          });
         }
       });
     }

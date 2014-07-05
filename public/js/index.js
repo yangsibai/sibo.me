@@ -14,11 +14,11 @@
     text: "txt"
   };
 
-  this.codeEditor = function(editorId, type) {
+  this.codeEditor = function(editorId, type, id) {
     var editor, legalExt, setLanguage, setMode, updateFileName, updateLanguageAndMode;
     editor = ace.edit(editorId);
     editor.setTheme("ace/theme/tomorrow_night_bright");
-    setMode("text");
+    editor.session.setMode("ace/mode/text");
     editor.getSession().setTabSize(4);
     editor.setAutoScrollEditorIntoView(true);
     editor.setOption("maxLines", 30);
@@ -41,6 +41,20 @@
             return alert(data.message);
           }
         });
+      } else if (type === "edit") {
+        return $.post("/snippets/edit/" + id, {
+          title: title,
+          content: content,
+          tags: tags
+        }, function(data) {
+          if (data.code === 0) {
+            return window.location.href = "/snippets/single/" + id;
+          } else {
+            return alert(data.message);
+          }
+        });
+      } else {
+        return alert("unknown");
       }
     });
     $(".language").change(function() {

@@ -12,10 +12,10 @@ ext2ModeMap =
 	sql: "sql"
 	text: "txt"
 
-@codeEditor = (editorId, type)->
+@codeEditor = (editorId, type, id)->
 	editor = ace.edit(editorId)
 	editor.setTheme("ace/theme/tomorrow_night_bright")
-	setMode("text")
+	editor.session.setMode("ace/mode/text")
 	editor.getSession().setTabSize(4)
 	editor.setAutoScrollEditorIntoView(true);
 	editor.setOption("maxLines", 30);
@@ -36,6 +36,18 @@ ext2ModeMap =
 					window.location.href = "/snippets/single/#{data.id}"
 				else
 					alert data.message
+		else if type is "edit"
+			$.post "/snippets/edit/#{id}",
+				title: title
+				content: content
+				tags: tags
+			, (data)->
+				if data.code is 0
+					window.location.href = "/snippets/single/#{id}"
+				else
+					alert data.message
+		else
+			alert "unknown"
 
 	$(".language").change ()->
 		modeName = $(@).val()

@@ -40,7 +40,7 @@ exports.single = (req, res)->
 		else
 			snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "single",
-				auth:req.session.auth
+				auth: req.session.auth
 				title: snippet.title
 				snippet: snippet
 
@@ -72,9 +72,13 @@ exports.edit_GET_POST_$auth = (req, res)->
 			tags: tags
 		, (err)->
 			if err
-				throw err
+				res.send
+					code: 1
+					message: err.message
 			else
-				res.redirect "/snippets/single/#{id}"
+				res.send
+					code: 0
+					message: "ok"
 
 ###
     new snippet
@@ -91,9 +95,9 @@ exports.new_GET_POST_$auth = (req, res)->
 					message: err.message
 			else
 				res.send
-					code:0
-					message:"ok"
-					id:id
+					code: 0
+					message: "ok"
+					id: id
 
 ###
     删除
