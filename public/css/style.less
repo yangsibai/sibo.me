@@ -168,12 +168,16 @@ body {
     font-size: @font-size-desc;
     .tags {
       display: inline;
-      .tag {
+      margin-left: @margin-2;
+      .tag-list {
         display: inline;
-        cursor: pointer;
         margin-left: @margin-4;
-        padding: 0 @margin-4;
-        text-decoration: underline;
+        .tag-name {
+          display: inline;
+          cursor: pointer;
+          margin-right: @margin-3;
+          text-decoration: underline;
+        }
       }
     }
     .operate {

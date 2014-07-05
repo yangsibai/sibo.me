@@ -133,12 +133,16 @@ body textarea:focus {
 }
 .snippet .info .tags {
   display: inline;
+  margin-left: 20px;
 }
-.snippet .info .tags .tag {
+.snippet .info .tags .tag-list {
+  display: inline;
+  margin-left: 5px;
+}
+.snippet .info .tags .tag-list .tag-name {
   display: inline;
   cursor: pointer;
-  margin-left: 5px;
-  padding: 0 5px;
+  margin-right: 10px;
   text-decoration: underline;
 }
 .snippet .info .operate {

@@ -11,9 +11,11 @@ block content
         h2.secondary-title #{snippet.title}
         div.info
             span #{snippet.addTime}
-            ul.tags
-                - each tag in snippet.tags
-                    li.tag= tag.name
+            div.tags
+                span.tag-title Tags:
+                ul.tag-list
+                    - each tag in snippet.tags
+                        li.tag-name= tag.name
             a.operate(href="/snippets/edit/#{snippet.id}") Edit
             a.operate(href="/snippets/delete/#{snippet.id}") Delete
         if snippet.html
