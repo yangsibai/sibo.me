@@ -29,10 +29,6 @@ Module dependencies.
 
   app.use(express["static"](path.join(__dirname, "public")));
 
-  if (!config.isProduct()) {
-    app.use(express.errorHandler());
-  }
-
   app.use(express.cookieParser('sibo.me'));
 
   require("multi-process-session")(app);
@@ -41,6 +37,22 @@ Module dependencies.
     defaultEngine: "jade",
     defaultViewEngine: "jade"
   }, app);
+
+  if (!config.isProduct()) {
+    app.use(express.errorHandler());
+  }
+
+  app.use(function(req, res) {
+    return res.send("404:not found!");
+  });
+
+  app.use(function(err, req, res) {
+    return res.send("500:server error!");
+  });
+
+  process.on("uncaughtException", function(err) {
+    return console.dir(err);
+  });
 
   http.createServer(app).listen(config.port.app, function() {
     return console.log("Express server listening on port " + config.port.app);
