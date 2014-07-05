@@ -5,7 +5,7 @@ Module dependencies.
  */
 
 (function() {
-  var app, config, express, http, path;
+  var app, cluster, config, express, http, i, numCPUs, path, worker, _i;
 
   express = require("express");
 
@@ -16,6 +16,10 @@ Module dependencies.
   config = require("./config");
 
   app = express();
+
+  cluster = require('cluster');
+
+  numCPUs = require('os').cpus().length;
 
   app.use(express.favicon(__dirname + "/public/favicon.ico"));
 
@@ -54,9 +58,20 @@ Module dependencies.
     return console.dir(err);
   });
 
-  http.createServer(app).listen(config.port.app, function() {
-    return console.log("Express server listening on port " + config.port.app);
-  });
+  if (cluster.isMaster) {
+    for (i = _i = 1; 1 <= numCPUs ? _i <= numCPUs : _i >= numCPUs; i = 1 <= numCPUs ? ++_i : --_i) {
+      cluster.fork();
+    }
+    cluster.on('death', function(worker) {
+      console.log("" + worker.id + " dir");
+      return cluster.fork();
+    });
+  } else {
+    worker = cluster.worker;
+    http.createServer(app).listen(config.port.app, function() {
+      return console.log("worker " + worker.id + " listening on port " + config.port.app);
+    });
+  }
 
 }).call(this);
 

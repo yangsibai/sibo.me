@@ -7,6 +7,8 @@ path = require("path")
 config = require("./config")
 app = express()
 
+cluster = require('cluster')
+numCPUs = require('os').cpus().length
 
 app.use express.favicon(__dirname + "/public/favicon.ico")
 app.use express.json()
@@ -30,8 +32,16 @@ app.use (req, res)->
 app.use (err, req, res)->
 	res.send "500:server error!"
 
-process.on "uncaughtException",(err)->
+process.on "uncaughtException", (err)->
 	console.dir(err)
 
-http.createServer(app).listen config.port.app, ->
-	console.log "Express server listening on port " + config.port.app
+if cluster.isMaster
+	for i in [1..numCPUs]
+		cluster.fork()
+	cluster.on 'death', (worker)->
+		console.log "#{worker.id} dir"
+		cluster.fork()
+else
+	worker = cluster.worker
+	http.createServer(app).listen config.port.app, ->
+		console.log "worker #{worker.id} listening on port #{config.port.app}"
