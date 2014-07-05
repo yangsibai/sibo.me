@@ -169,3 +169,9 @@ body textarea:focus {
   width: 200px;
   height: 30px;
 }
+.new-snippet .form-control .language {
+  height: 30px;
+  border-radius: 3px;
+  font-size: 14px;
+  border: 1px solid #dddddd;
+}

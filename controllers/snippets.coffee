@@ -90,7 +90,10 @@ exports.new_GET_POST_$auth = (req, res)->
 					code: 1
 					message: err.message
 			else
-				res.redirect("/snippets/single/#{id}")
+				res.send
+					code:0
+					message:"ok"
+					id:id
 
 ###
     删除

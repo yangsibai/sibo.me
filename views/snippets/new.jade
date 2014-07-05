@@ -4,16 +4,133 @@ block content
     div.new-snippet
         h2.secondary-title New Snippet
         div.form
-            form(method="POST",enctype="/snippet/new")
-                div.form-control
-                    span.description File name
-                    input(type="text",name="title")
-                div.form-control
-                    span.description Content
-                    textarea.snippet-content(type="text",name="content")
-                div.form-control
-                    span.description Tags
-                    input(type="text",name="tags")
-                    small.desc split tags by '|'
-                div.form-control
-                    button.submit(type="submit") Submit
+            div.form-control
+                span.description File name
+                input(type="text",name="title",id="title")
+                select.language
+                    option(value="coffee") Coffee Script
+                    option(value="csharp") C Sharp
+                    option(value="css") Css
+                    option(value="html") Html
+                    option(value="java") Java
+                    option(value="javascript") Javascript
+                    option(value="markdown") Markdown
+                    option(value="sql") SQL
+                    option(value="text") Text
+            div.form-control
+                span.description Content
+                pre#editor
+            div.form-control
+                span.description Tags
+                input(type="text",name="tags",id="tags")
+                small.desc split tags by '|'
+            div.form-control
+                button.submit(id="submit") Submit
+
+        pre#editor
+
+    script(src="/js/ace-min/ace.js")
+    script.
+        var ext2ModeMap={
+            coffee:"coffee",
+            csharp:"cs",
+            css:"css",
+            html:"html",
+            java:"java",
+            javascript:"js",
+            markdown:["md","markdown"],
+            sql:"sql",
+            text:"txt"
+         };
+        $(document).ready(function(){
+            editor=ace.edit("editor");
+            editor.setTheme("ace/theme/tomorrow_night_bright");
+            editor.session.setMode("ace/mode/javascript");
+            editor.getSession().setTabSize(4);
+            editor.setAutoScrollEditorIntoView(true);
+            editor.setOption("maxLines", 30);
+            editor.setOption("minLines", 20);
+            editor.setFontSize(14);
+
+            $("#submit").click(function(){
+                var title=$("#title").val().trim();
+                var tags=$("#tags").val().trim();
+                var content = editor.getValue();
+                $.post("/snippets/new",{
+                    title : title,
+                    content : content,
+                    tags : tags
+                },function(data){
+                    if(data.code===0){
+                        window.location.href="/snippets/single/"+data.id;
+                    }
+                    else{
+                        alert(data.message);
+                    }
+                });
+            });
+
+            $(".language").change(function(){
+                var modeName=$(this).val();
+                editor.session.setMode("ace/mode/"+modeName);
+                updateFileName(modeName);
+            });
+
+            $("#title").keyup(function(){
+                var title=$(this).val();
+                updateSelectAndMode(title);
+            });
+
+            $("#title").blur(function(){
+                var currentTilte=$(this).val();
+                var trimed=currentTilte.trim();
+                if(currentTilte!==trimed){
+                    $(this).val(trimed);
+                    updateSelectAndMode(trimed);
+                }
+            });
+
+            var updateSelectAndMode=function(title){
+                var dotIndex=title.lastIndexOf('.');
+                if(dotIndex!==-1){
+                    var ext=title.slice(dotIndex+1);
+                    for(var key in ext2ModeMap){
+                        var value=ext2ModeMap[key];
+                        if(Array.isArray(value)&&value.indexOf(ext)!==-1||value===ext){
+                            editor.session.setMode("ace/mode/"+key);
+                            $(".language").val(key);
+                            return;
+                        }
+                    }
+                }
+                editor.session.setMode("ace/mode/text");
+                $(".language").val("text");
+            };
+
+            var updateFileName=function(modeName){
+                var title=$("#title").val().trim();
+                var extensions=ext2ModeMap[modeName];
+                if(title){
+                    var dotIndex=title.lastIndexOf('.');
+                    if(dotIndex !== -1){
+                        var ext=title.slice(dotIndex+1);
+                        if(Array.isArray(extensions)&&extensions.indexOf(ext)!==-1||ext===extensions){
+                            return;
+                        }
+                        title = title.slice(0,dotIndex)
+                    }
+                    var newExt=Array.isArray(extensions)?extensions[0]:extensions;
+                    title=title+"."+newExt;
+                }
+                else{
+                    if(Array.isArray(extensions)){
+                        title="new-file."+extensions[0];
+                    }
+                    else{
+                        title="new-file."+extensions;
+                    }
+                }
+                $("#title").val(title);
+            };
+
+        });
