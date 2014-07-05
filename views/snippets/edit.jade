@@ -5,7 +5,7 @@ extends ../shared/layout_snippet
 
 block content
     div.edit-snippet
-        h2.title Edit #{snippet.title}
+        h2.secondary-title Edit #{snippet.title}
         div.form
             form(method="POST",enctype="/snippet/edit/#{snippet.id}")
                 div.form-control

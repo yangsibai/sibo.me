@@ -23,6 +23,7 @@ exports.index = (req, res)->
 			for snippet in snippets
 				snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "index",
+				title: "All snippets"
 				snippets: snippets
 
 ###
@@ -38,6 +39,7 @@ exports.single = (req, res)->
 		else
 			snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "single",
+				title: snippet.title
 				snippet: snippet
 
 ###
@@ -55,6 +57,7 @@ exports.edit_GET_POST_$auth = (req, res)->
 					tagNameArr.push tag.name
 				snip.tags = tagNameArr.join('|')
 				res.render "edit",
+					title: "Edit - #{snip.title}"
 					snippet: snip
 	else
 		title = req.body.title

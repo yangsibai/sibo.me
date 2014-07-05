@@ -5,8 +5,10 @@ html
         link(rel='stylesheet', href='/css/style.css')
         script(src="/js/jquery-2.0.3.min.js")
         script(src="/js/index.js")
+        block head
     body
-        div.snip-container
-            a(href="/snippets")
-                h1.title Snippets
-            block content
+        div.snip
+            a.nav-title(href="/snippets") Snippets
+            div.snip-container
+                block content
+        block body
