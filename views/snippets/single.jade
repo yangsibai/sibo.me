@@ -3,9 +3,6 @@
 
 extends  ../shared/layout_snippet
 
-block head
-    link(rel="stylesheet",href="/js/google-code-prettify/prettify.css")
-
 block content
     div.snippet
         h2.secondary-title #{snippet.title}
@@ -22,14 +19,22 @@ block content
         if snippet.html
             div.content !{snippet.html}
         else
-            div.content
-                pre
-                    code #{snippet.content}
+            pre#code #{snippet.content}
 
 block body
-    script(src="/js/google-code-prettify/prettify.js")
+    script(src="/js/ace-min/ace.js")
     script.
         $(document).ready(function() {
-             $('pre').addClass('prettyprint linenums');
-             prettyPrint();
+            if($("#code").length>0){
+                var editor=ace.edit("code");
+                var title="#{snippet.title}";
+                var mode= getAceModeByTitle(title);
+                editor.setTheme("ace/theme/tomorrow");
+                editor.session.setMode("ace/mode/"+mode);
+                editor.getSession().setTabSize(4);
+                editor.setAutoScrollEditorIntoView(true);
+                editor.setOption("maxLines", 30);
+                editor.setReadOnly(true);
+                editor.setFontSize(14);
+            }
          });

@@ -17,10 +17,10 @@ ext2ModeMap =
 	editor.setTheme("ace/theme/tomorrow_night_bright")
 	editor.session.setMode("ace/mode/text")
 	editor.getSession().setTabSize(4)
-	editor.setAutoScrollEditorIntoView(true);
-	editor.setOption("maxLines", 30);
-	editor.setOption("minLines", 20);
-	editor.setFontSize(14);
+	editor.setAutoScrollEditorIntoView(true)
+	editor.setOption("maxLines", 30)
+	editor.setOption("minLines", 20)
+	editor.setFontSize(14)
 
 	$("#submit").click ()->
 		title = $("#title").val().trim()
@@ -81,16 +81,9 @@ ext2ModeMap =
 		$("#title").val(title)
 
 	updateLanguageAndMode = (title)->
-		dotInx = title.lastIndexOf('.')
-		if dotInx isnt -1
-			ext = title.slice(dotInx + 1)
-			for key,value of ext2ModeMap
-				if legalExt(value, ext)
-					setMode(key)
-					setLanguage(key)
-					return
-		setMode("text")
-		setLanguage("text")
+		mode = getAceModeByTitle(title)
+		setMode(mode)
+		setLanguage(mode)
 
 	setMode = (modeName)->
 		editor.session.setMode("ace/mode/#{modeName}")
@@ -98,7 +91,16 @@ ext2ModeMap =
 	setLanguage = (modeName)->
 		$(".language").val(modeName)
 
-	legalExt = (extensions, ext)->
-		if (Array.isArray(extensions) and extensions.indexOf(ext) isnt -1) or ext is extensions
-			return true
-		return false
+@legalExt = (extensions, ext)->
+	if (Array.isArray(extensions) and extensions.indexOf(ext) isnt -1) or ext is extensions
+		return true
+	return false
+
+@getAceModeByTitle = (title)->
+	dotInx = title.lastIndexOf('.')
+	if dotInx isnt -1
+		ext = title.slice(dotInx + 1)
+		for key,value of ext2ModeMap
+			if legalExt(value, ext)
+				return key
+	return "text"

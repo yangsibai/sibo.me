@@ -15,7 +15,7 @@
   };
 
   this.codeEditor = function(editorId, type, id) {
-    var editor, legalExt, setLanguage, setMode, updateFileName, updateLanguageAndMode;
+    var editor, setLanguage, setMode, updateFileName, updateLanguageAndMode;
     editor = ace.edit(editorId);
     editor.setTheme("ace/theme/tomorrow_night_bright");
     editor.session.setMode("ace/mode/text");
@@ -98,34 +98,39 @@
       return $("#title").val(title);
     };
     updateLanguageAndMode = function(title) {
-      var dotInx, ext, key, value;
-      dotInx = title.lastIndexOf('.');
-      if (dotInx !== -1) {
-        ext = title.slice(dotInx + 1);
-        for (key in ext2ModeMap) {
-          value = ext2ModeMap[key];
-          if (legalExt(value, ext)) {
-            setMode(key);
-            setLanguage(key);
-            return;
-          }
-        }
-      }
-      setMode("text");
-      return setLanguage("text");
+      var mode;
+      mode = getAceModeByTitle(title);
+      setMode(mode);
+      return setLanguage(mode);
     };
     setMode = function(modeName) {
       return editor.session.setMode("ace/mode/" + modeName);
     };
-    setLanguage = function(modeName) {
+    return setLanguage = function(modeName) {
       return $(".language").val(modeName);
     };
-    return legalExt = function(extensions, ext) {
-      if ((Array.isArray(extensions) && extensions.indexOf(ext) !== -1) || ext === extensions) {
-        return true;
+  };
+
+  this.legalExt = function(extensions, ext) {
+    if ((Array.isArray(extensions) && extensions.indexOf(ext) !== -1) || ext === extensions) {
+      return true;
+    }
+    return false;
+  };
+
+  this.getAceModeByTitle = function(title) {
+    var dotInx, ext, key, value;
+    dotInx = title.lastIndexOf('.');
+    if (dotInx !== -1) {
+      ext = title.slice(dotInx + 1);
+      for (key in ext2ModeMap) {
+        value = ext2ModeMap[key];
+        if (legalExt(value, ext)) {
+          return key;
+        }
       }
-      return false;
-    };
+    }
+    return "text";
   };
 
 }).call(this);
