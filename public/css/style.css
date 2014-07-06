@@ -189,8 +189,12 @@ body textarea:focus {
   font-size: 14px;
   border: 1px solid #aaaaaa;
 }
+.pin-it .secondary-title {
+  padding-left: 10px;
+}
 .pin-it .list {
   overflow: auto;
+  padding: 10px 0 10px 10px;
 }
 .pin-it .list .pin {
   width: 279px;
