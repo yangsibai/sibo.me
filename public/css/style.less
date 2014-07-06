@@ -82,11 +82,12 @@ body {
 }
 
 .snip {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   background: #333;
   position: relative;
+  padding: @margin-2 0;
   .nav {
     position: absolute;
     top: @margin-2;
@@ -104,11 +105,8 @@ body {
   }
   .snip-container {
     width: 900px;
-    height: 93%;
-    position: absolute;
-    top: @margin-2;
-    left: 50%;
-    margin-left: -450px;
+    min-height: 93%;
+    margin: 0 auto;
     background-color: #f0f0f0;
     padding: @margin-3 @margin-2;
     .secondary-title {
@@ -242,6 +240,50 @@ body {
       border-radius: 3px;
       font-size: @font-size-secondary;
       border: 1px solid @color-border;
+    }
+  }
+}
+
+.pin-it {
+  .list {
+    overflow: auto;
+    .pin {
+      width: 279px;
+      height: 150px;
+      float: left;
+      border: 1px solid @color-border;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      .page-info {
+        margin: @margin-3;
+        .page-title {
+          font-size: @font-size-title;
+          color: @color-primary;
+          word-wrap: break-word;
+          margin-bottom: @margin-4;
+        }
+        .page-description {
+          font-size: @font-size-desc;
+          margin-bottom: @margin-3;
+          .time {
+            margin-left: @margin-4;
+          }
+        }
+        .pin-list {
+          .pin-item {
+            .message {
+              font-size: @font-size-primary;
+              margin-right: @margin-3;
+            }
+            .pin-time {
+              font-size: @font-size-desc;
+            }
+          }
+        }
+      }
+    }
+    .pin:nth-of-type(3n) {
+      margin-right: 0;
     }
   }
 }
