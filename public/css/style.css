@@ -43,7 +43,7 @@ body textarea:focus {
 }
 .container .main-title:hover {
   color: #333;
-  background: #ffffff;
+  background: #f8f8f8;
 }
 .container .nav-bar {
   font-size: 20px;
