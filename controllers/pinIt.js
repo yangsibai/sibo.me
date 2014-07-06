@@ -10,6 +10,7 @@
         return res.send(err.message);
       } else {
         return res.render("index", {
+          title: "Pin It",
           pageData: pageData
         });
       }

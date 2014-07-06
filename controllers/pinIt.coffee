@@ -6,4 +6,5 @@ exports.index = (req, res)->
 			res.send err.message
 		else
 			res.render "index",
+				title: "Pin It"
 				pageData: pageData

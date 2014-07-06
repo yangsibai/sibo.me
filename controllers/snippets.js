@@ -40,7 +40,7 @@
         }
         return res.render("index", {
           auth: req.session.auth,
-          title: "All snippets",
+          title: "Snippets",
           snippets: snippets
         });
       }

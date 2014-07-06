@@ -24,7 +24,7 @@ exports.index = (req, res)->
 				snippet.addTime = dataHelper.prettyDateTime(snippet.addTime)
 			res.render "index",
 				auth: req.session.auth
-				title: "All snippets"
+				title: "Snippets"
 				snippets: snippets
 
 ###
