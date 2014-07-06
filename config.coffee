@@ -1,3 +1,4 @@
+_ = require("underscore")
 env = "dev"
 
 isProduct = exports.isProduct = ()->
@@ -12,16 +13,17 @@ exports.dbConfig = ()->
 		user: 'root',
 		port: 3306,
 		password: ' ',
-		database: 'sibo'
+		database: "sibo"
 	else
 		host: 'localhost',
 		user: 'root',
 		port: 3306,
 		password: '',
-		database: 'sibo'
+		database: "sibo"
 
 ###
     port config
 ###
 exports.port =
-	app: 4000 #heshui.la
+	app: 4000 #sibo.me
+	api: 4001 #api.sibo.me
