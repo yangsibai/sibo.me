@@ -6,7 +6,7 @@
 @color-link: #37a;
 @color-link-hover: #fff;
 @color-link-hover-background: #37a;
-@color-border: #ddd;
+@color-border: #aaa;
 @color-glow-light: #4e78ff;
 @color-btn-background: @color-glow-light;
 @color-btn: @color-link-hover;
@@ -252,8 +252,9 @@ body {
       height: 150px;
       float: left;
       border: 1px solid @color-border;
-      margin-right: 20px;
-      margin-bottom: 20px;
+      margin-right: @margin-2;
+      margin-bottom: @margin-2;
+      cursor: pointer;
       .page-info {
         margin: @margin-3;
         .page-title {
@@ -261,6 +262,14 @@ body {
           color: @color-primary;
           word-wrap: break-word;
           margin-bottom: @margin-4;
+          .link {
+            color: @color-primary;
+          }
+          .link:hover {
+            color: @color-link;
+            background: none;
+            text-decoration: none;
+          }
         }
         .page-description {
           font-size: @font-size-desc;
@@ -284,6 +293,9 @@ body {
     }
     .pin:nth-of-type(3n) {
       margin-right: 0;
+    }
+    .pin:hover {
+      box-shadow: 0px 0px 10px @color-glow-light;
     }
   }
 }
