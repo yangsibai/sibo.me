@@ -38,8 +38,8 @@
           }
         });
       } else {
-        sql = "update page\nset title=?,\nwidth=?,\nheight=?,\nupdateTime=now(),\npinCount=pinCount+1";
-        return conn.update(sql, [data.title, data.width, data.height], function(err, success) {
+        sql = "update page\nset title=?,\nwidth=?,\nheight=?,\nupdateTime=now(),\npinCount=pinCount+1\nwhere id=?";
+        return conn.update(sql, [data.title, data.width, data.height, pageId], function(err, success) {
           if (err) {
             conn.end();
             return cb(err);

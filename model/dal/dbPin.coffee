@@ -48,11 +48,13 @@ width=?,
 height=?,
 updateTime=now(),
 pinCount=pinCount+1
+where id=?
 """
 			conn.update sql, [
 				data.title
 				data.width
 				data.height
+				pageId
 			], (err, success)->
 				if err
 					conn.end()
