@@ -1,0 +1,14 @@
+//
+   Created by massimo on 2014/7/9.
+
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title Parallax scroller
+        link(rel="stylesheet",href="/css/parallas.css")
+        script(src="/js/pixi/pixi.dev.js")
+    body(onload="init();")
+        div.container
+            canvas#game-canvas(width=512,height=384)
+        script(src="/js/parallas.js")
