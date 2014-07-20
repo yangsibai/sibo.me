@@ -1,6 +1,4 @@
 node_modules/
 .idea/
-sqls/
 public/stylesheets/style.css
-*.sql
 *.zip
