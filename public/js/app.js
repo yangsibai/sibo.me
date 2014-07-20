@@ -36,6 +36,7 @@
       });
     };
     $scope.search = function(keyword) {
+      $scope.currentState = 2;
       return apiHelper.post("/pinIt/search", {
         keyword: keyword
       }, function(data) {

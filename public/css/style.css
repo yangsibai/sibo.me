@@ -209,6 +209,18 @@ body textarea:focus {
 .pin-it .tool-bar .search {
   float: right;
 }
+.pin-it .tool-bar .search .btn {
+  height: 27px;
+  background-color: #4e78ff;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.pin-it .tool-bar .search .btn:hover {
+  background-color: #ffffff;
+  color: #4e78ff;
+}
 .pin-it .list {
   overflow: auto;
   padding: 10px 0 10px 10px;

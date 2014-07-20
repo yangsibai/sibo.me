@@ -27,6 +27,7 @@ app.controller("pinItCtrl", ($scope, apiHelper)->
 				alert(data.message)
 
 	$scope.search = (keyword)->
+		$scope.currentState = 2
 		apiHelper.post "/pinIt/search",
 			keyword: keyword
 		, (data)->
