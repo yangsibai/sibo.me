@@ -9,7 +9,7 @@
         "express": "3.4.7",
         "jade": "*",
         "simple-mvc": "~0.0.9",
-        "mysql-dbhelper": "~0.0.1",
+        "mysql-dbhelper": "~0.0.3",
         "underscore": "*",
         "marked": "*0.3.2",
         "multi-process-session": "~0.0.5"

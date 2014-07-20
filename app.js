@@ -5,7 +5,7 @@ Module dependencies.
  */
 
 (function() {
-  var app, cluster, config, express, http, i, numCPUs, path, worker, _i;
+  var app, cluster, config, express, http, i, numCPUs, path, worker, _, _i;
 
   express = require("express");
 
@@ -16,6 +16,8 @@ Module dependencies.
   config = require("./config");
 
   app = express();
+
+  _ = require("underscore");
 
   cluster = require('cluster');
 
@@ -37,14 +39,39 @@ Module dependencies.
 
   require("multi-process-session")(app);
 
+  if (!config.isProduct()) {
+    app.use(express.errorHandler());
+  }
+
+  app.use(function(req, res, next) {
+    res.err = function(err) {
+      return res.send({
+        code: 1,
+        message: err.message
+      });
+    };
+    res.data = function(data) {
+      if (_.isUndefined(data.code)) {
+        data.code = 0;
+      }
+      if (_.isUndefined(data.message)) {
+        data.message = "ok";
+      }
+      return res.send(data);
+    };
+    res.ok = function() {
+      return res.send({
+        code: 0,
+        message: "ok"
+      });
+    };
+    return next();
+  });
+
   require("simple-mvc")({
     defaultEngine: "jade",
     defaultViewEngine: "jade"
   }, app);
-
-  if (!config.isProduct()) {
-    app.use(express.errorHandler());
-  }
 
   app.use(function(req, res) {
     return res.send("404:not found!");

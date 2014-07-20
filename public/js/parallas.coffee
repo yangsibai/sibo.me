@@ -42,16 +42,17 @@ class Scroller
 		@mid = new Mid()
 		stage.addChild(@mid)
 
-		@viewportX = 0
+		@front = new Walls()
+		stage.addChild(@front)
 
+		@viewportX = 0
 	setViewportX: (viewportX)->
 		@viewportX = viewportX
 		@far.setViewportX(viewportX)
 		@mid.setViewportX(viewportX)
-
+		@front.setViewportX(viewportX) 
 	getViewportX: ()->
 		return @viewportX
-
 	moveViewportXBy: (units)->
 		newViewportX = @viewportX + units
 		@setViewportX(newViewportX)
@@ -59,6 +60,10 @@ class Scroller
 class WallSpritesPool
 	constructor: ()->
 		@createWindows()
+		@createDecorations()
+		@createFrontEdges()
+		@createBackEdges()
+		@createSteps()
 	shuffle: (array)->
 		len = array.length
 		shuffles = len * 3
@@ -72,13 +77,142 @@ class WallSpritesPool
 		@addWindowsSprites(6, "window_02")
 		@shuffle(@windows)
 	addWindowsSprites: (amount, frameId)->
-		for i in[1..amount]
+		for i in [1..amount]
 			sprite = PIXI.Sprite.fromFrame(frameId)
 			@windows.push sprite
 	borrowWindow: ()->
 		@windows.shift()
-	returnWindows: (sprite)->
+	returnWindow: (sprite)->
 		@windows.push sprite
+	createDecorations: ()->
+		@decorations = []
+		@addDecorationSprites(6, "decoration_01")
+		@addDecorationSprites(6, "decoration_02")
+		@addDecorationSprites(6, "decoration_03")
+		@shuffle(@decorations)
+	addDecorationSprites: (amount, frameId)->
+		for i in [1..amount]
+			sprite = PIXI.Sprite.fromFrame(frameId)
+			@decorations.push sprite
+	borrowDecoration: ()->
+		@decorations.shift()
+	returnDecoration: (sprite)->
+		@decorations.push(sprite)
+	createFrontEdges: ()->
+		@frontEdges = []
+		@addFrontEdgeSprites(2, "edge_01")
+		@addFrontEdgeSprites(2, "edge_02")
+		@shuffle(@frontEdges)
+	addFrontEdgeSprites: (amount, frameId)->
+		for i in [1..amount]
+			sprite = new PIXI.Sprite(PIXI.Texture.fromFrame(frameId))
+			@frontEdges.push sprite
+	borrowFrontEdge: ()->
+		return @frontEdges.shift()
+	returnFrontEdge: (sprite)->
+		@frontEdges.push(sprite)
+	createBackEdges: ()->
+		@backEdges = []
+		@addBackEdgeSprites(2, "edge_01");
+		@addBackEdgeSprites(2, "edge_02");
+		@shuffle(@backEdges);
+	addBackEdgeSprites: (amount, frameId)->
+		for i in [1..amount]
+			sprite = new PIXI.Sprite(PIXI.Texture.fromFrame(frameId))
+			sprite.anchor.x = 1
+			sprite.scale.x = -1
+			@backEdges.push sprite
+	borrowBackEdge: ()->
+		return @backEdges.shift()
+	returnBackEdge: (sprite)->
+		@backEdges.push(sprite)
+	createSteps: ()->
+		@steps = []
+		@addStepsSprites(2, "step_01")
+	addStepsSprites: (amount, frameId)->
+		for i in [1..amount]
+			sprite = new PIXI.Sprite(PIXI.Texture.fromFrame(frameId))
+			sprite.anchor.y = 0.25
+			@steps.push sprite
+	borrowStep: ()->
+		return @steps.shift()
+	returnStep: (sprite)->
+		@steps.push(sprite)
+
+class SliceType
+	@FRONT: 0
+	@BACK: 1
+	@STEP: 2
+	@DECORATION: 3
+	@WINDOW: 4
+	@GAP: 5
+
+class WallSlice
+	@WIDTH: 64
+	constructor: (@type, @y)->
+		@sprite = null
+
+class Walls extends PIXI.DisplayObjectContainer
+	@VIEWPORT_WIDTH: 512
+	@VIEWPORT_NUM_SLICES: Math.ceil(@VIEWPORT_WIDTH / WallSlice.WIDTH) + 1
+	constructor: ->
+		super(this)
+		@pool = new WallSpritesPool()
+		@createLookupTables()
+
+		@slices = []
+		@createTestMap()
+
+		@viewportX = 0
+		@viewportSliceX = 0
+	createLookupTables: ()->
+		@borrowWallSpriteLookup = []
+		@borrowWallSpriteLookup[SliceType.FRONT] = @pool.borrowFrontEdge
+		@borrowWallSpriteLookup[SliceType.BACK] = @pool.borrowBackEdge
+		@borrowWallSpriteLookup[SliceType.STEP] = @pool.borrowStep
+		@borrowWallSpriteLookup[SliceType.DECORATION] = @pool.borrowDecoration
+		@borrowWallSpriteLookup[SliceType.WINDOW] = @pool.borrowWindow
+
+		@returnWallSpriteLookup = []
+		@returnWallSpriteLookup[SliceType.FRONT] = @pool.returnFrontEdge
+		@returnWallSpriteLookup[SliceType.BACK] = @pool.returnBackEdge
+		@returnWallSpriteLookup[SliceType.STEP] = @pool.returnStep
+		@returnWallSpriteLookup[SliceType.DECORATION] = @pool.returnDecoration
+		@returnWallSpriteLookup[SliceType.WINDOW] = @pool.returnWindow
+	borrowWallSprite: (sliceType)->
+		return @borrowWallSpriteLookup[sliceType].call(@pool)
+	returnWallSprite: (sliceType, sliceSprite)->
+		return @returnWallSpriteLookup[sliceType].call(@pool, sliceSprite)
+	addSlice: (sliceType, y)->
+		slice = new WallSlice(sliceType, y)
+		@slices.push slice
+	setViewportX: (viewportX)->
+
+	createTestWallSpan: ()->
+		@addSlice(SliceType.FRONT, 192)
+		@addSlice(SliceType.WINDOW, 192)
+		@addSlice(SliceType.DECORATION, 192)
+		@addSlice(SliceType.WINDOW, 192)
+		@addSlice(SliceType.DECORATION, 192)
+		@addSlice(SliceType.WINDOW, 192)
+		@addSlice(SliceType.DECORATION, 192)
+		@addSlice(SliceType.WINDOW, 192)
+		@addSlice(SliceType.BACK, 192)
+	createTestSteppedWallSpan: ()->
+		@addSlice(SliceType.FRONT, 192)
+		@addSlice(SliceType.WINDOW, 192)
+		@addSlice(SliceType.DECORATION, 192)
+		@addSlice(SliceType.STEP, 256)
+		@addSlice(SliceType.WINDOW, 256)
+		@addSlice(SliceType.BACK, 256)
+	createTestGap: ()->
+		@addSlice(SliceType.GAP)
+	createTestMap: ()->
+		for i in [1..10]
+			@createTestWallSpan()
+			@createTestGap()
+			@createTestSteppedWallSpan()
+			@createTestGap()
 
 class Main
 	@SCROLL_SPEED: 5
@@ -103,25 +237,6 @@ class Main
 	spriteSheetLoaded: ->
 		@scroller = new Scroller(@stage)
 		requestAnimFrame(@update.bind(this))
-
-		@pool = new WallSpritesPool()
-		@wallSlices = []
-	borrowWallSprites: (num)->
-		for i in [0..(num - 1)]
-			sprite = @pool.borrowWindow()
-			sprite.position.x = -32 + (i * 64)
-			sprite.position.y = 128
-
-			@wallSlices.push(sprite)
-
-			@stage.addChild(sprite)
-	returnWallSprites: ->
-		for i in [0..(@wallSlices.length - 1)]
-			sprite = @wallSlices[i]
-			@stage.removeChide(sprite)
-			@pool.returnWindow(sprite)
-
-		@wallSlices = []
 
 window.init = ()->
 	window.main = new Main()

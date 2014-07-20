@@ -28,4 +28,6 @@ exports.new = (snippet, cb)->
 		snippet.title
 		snippet.content
 		tagNameArr.join('|')
-	], cb
+	], ()->
+		conn.end()
+		cb.apply this, arguments

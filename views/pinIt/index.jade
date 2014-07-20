@@ -4,19 +4,20 @@
 extends ../shared/layout_snippet
 
 block content
-    div.pin-it
+    div.pin-it(ng-controller="pinItCtrl")
         h2.secondary-title Pin It
+        ul.menu
+            li.menu-item
+                a(href="javascript:void 0;" ng-click="getData(0)") InProgress
+            li.menu-item
+                a(href="javascript:void 0;" ng-click="getData(1)") Archived
         div.list
-            each page in pageData
-                div.pin
-                    div.page-info
-                        h3.page-title
-                            a.link(href=page.url,target="_blank") #{page.title}
-                        div.page-description
-                            span.time #{page.addTime}
-                        ul.pin-list
-                            each pin in page.pins
-                                li.pin-item
-                                    span.message #{pin.message}
-                                    span.pin-time (#{pin.pinTime})
+            div.pin(ng-repeat="page in data")
+                div.page-info
+                    h3.page-title
+                        a.link(href="{{page.url}}",target="_blank") {{page.title}}
+                    div.page-description
+                        span.time {{page.addTime}}
+                        if auth
+                            span.archive(ng-click="archive($index)",ng-show="currentState===0")
         p(style="clear:left;")

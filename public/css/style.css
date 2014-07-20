@@ -192,6 +192,14 @@ body textarea:focus {
 .pin-it .secondary-title {
   padding-left: 10px;
 }
+.pin-it .menu {
+  margin: 20px 10px;
+}
+.pin-it .menu .menu-item {
+  cursor: pointer;
+  margin-right: 10px;
+  display: inline;
+}
 .pin-it .list {
   overflow: auto;
   padding: 10px 0 10px 10px;
@@ -203,7 +211,6 @@ body textarea:focus {
   border: 1px solid #aaaaaa;
   margin-right: 20px;
   margin-bottom: 20px;
-  cursor: pointer;
 }
 .pin-it .list .pin .page-info {
   margin: 10px;
@@ -228,6 +235,18 @@ body textarea:focus {
 }
 .pin-it .list .pin .page-info .page-description .time {
   margin-left: 5px;
+}
+.pin-it .list .pin .page-info .page-description .archive {
+  width: 16px;
+  height: 16px;
+  margin-left: 10px;
+  display: inline-block;
+  cursor: pointer;
+  opacity: .5;
+  background: url("/img/archive.png");
+}
+.pin-it .list .pin .page-info .page-description .archive:hover {
+  opacity: 1;
 }
 .pin-it .list .pin .page-info .pin-list .pin-item .message {
   font-size: 16px;

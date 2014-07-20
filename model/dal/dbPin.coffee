@@ -1,5 +1,6 @@
 dbHelper = require('mysql-dbhelper')
 dbConfig = require('../../config').dbConfig()
+dbTag = require("./dbTag")
 _ = require('underscore')
 dataHelper = require('../../helper/dataHelper')
 
@@ -8,7 +9,6 @@ dataHelper = require('../../helper/dataHelper')
 ###
 exports.new = (data, cb)->
 	conn = dbHelper.createConnection(dbConfig)
-	conn.connect()
 	sql = """
 		select id
 		from page
@@ -24,13 +24,14 @@ exports.new = (data, cb)->
 		else if not pageId
 			sql = """
 				insert into page(url,title,width,height,addTime,updateTime,pinCount,state)
-				values(?,?,?,?,now(),now(),1,0)
+				values(?,?,?,?,now(),now(),1,?)
 				"""
 			conn.insert sql, [
 				data.url
 				data.title
 				data.width
 				data.height
+				dataHelper.pageState.inProgress
 			], (err, success, pageId)->
 				if err
 					conn.end()
@@ -42,14 +43,14 @@ exports.new = (data, cb)->
 					$insertPin(conn, data, pageId, cb)
 		else
 			sql = """
-update page
-set title=?,
-width=?,
-height=?,
-updateTime=now(),
-pinCount=pinCount+1
-where id=?
-"""
+					update page
+					set title=?,
+					width=?,
+					height=?,
+					updateTime=now(),
+					pinCount=pinCount+1
+					where id=?
+					"""
 			conn.update sql, [
 				data.title
 				data.width
@@ -65,6 +66,31 @@ where id=?
 				else
 					$insertPin(conn, data, pageId, cb)
 
+###
+    插入pin
+###
+$insertPin = (conn, data, pageId, cb)->
+	sql = """
+		insert into pin(pageId,x,y,message,addTime,state)
+		values(?,?,?,?,now(),0);
+		"""
+	conn.insert sql, [
+		pageId
+		data.x
+		data.y
+		data.message
+	], (err, success, pinId)->
+		conn.end()
+		if err
+			cb err
+		else unless success
+			cb new Error("fail")
+		else
+			cb null
+
+###
+    get pin count on a page
+###
 exports.countOnPage = (url, cb)->
 	sql = """
 		select pinCount
@@ -72,7 +98,6 @@ exports.countOnPage = (url, cb)->
 		where url=?;
 		"""
 	conn = dbHelper.createConnection(dbConfig)
-	conn.connect()
 	conn.executeScalar sql, [
 		url
 	], (err, count)->
@@ -82,6 +107,9 @@ exports.countOnPage = (url, cb)->
 		else
 			cb null, count or 0
 
+###
+	get all pin on a page
+###
 exports.pinOnPage = (url, cb)->
 	sql = """
 		select p.*
@@ -92,25 +120,29 @@ exports.pinOnPage = (url, cb)->
 		order by p.y,p.x;
 		"""
 	conn = dbHelper.createConnection(dbConfig)
-	conn.connect()
 	conn.execute sql, [
 		url
 	], (err, data)->
 		conn.end()
 		cb err, data
 
-exports.all = (cb)->
+###
+    get all pages
+###
+exports.all = (state, cb)->
 	sql = """
-select a.id,a.url,a.title,a.addTime,a.updateTime,a.pinCount,
-p.message,p.addTime as pinTime
-from page a
-inner join pin p
-on a.id=p.pageId
-order by p.id desc
-"""
+		select a.id,a.url,a.title,a.addTime,a.updateTime,a.pinCount,
+		p.message,p.addTime as pinTime
+		from page a
+		inner join pin p
+		on a.id=p.pageId
+		WHERE a.state=?
+		order by p.id desc
+		"""
 	conn = dbHelper.createConnection(dbConfig)
-	conn.connect()
-	conn.execute sql, (err, results)->
+	conn.execute sql, [
+		state
+	], (err, results)->
 		conn.end()
 		if err
 			cb err
@@ -144,21 +176,77 @@ order by p.id desc
 					pageData.push page
 			cb null, pageData
 
-$insertPin = (conn, data, pageId, cb)->
+###
+    update a page info
+###
+exports.updatePage = (info, cb)->
 	sql = """
-		insert into pin(pageId,x,y,message,addTime,state)
-		values(?,?,?,?,now(),0);
+		update page
+		set comment=?,updateTime=now()
+		where id=?
 		"""
-	conn.insert sql, [
+	conn = dbHelper.createConnection(dbConfig)
+	conn.update sql, [
+		info.comment
+		info.id
+	], (err)->
+		if err
+			conn.end()
+			cb err
+		else
+			$insertTag conn, info.id, info.tags, cb
+
+###
+    insert tags
+###
+$insertTag = (conn, pageId, tags, cb)->
+	sql = """
+		DELETE FROM page_tag
+		WHERE pageId=?
+		"""
+	conn.executeNonQuery sql, [
 		pageId
-		data.x
-		data.y
-		data.message
-	], (err, success, pinId)->
-		conn.end()
+	], (err)->
 		if err
 			cb err
-		else unless success
-			cb new Error("fail")
 		else
-			cb null
+			finished = _.after tags.length, ()->
+				conn.end()
+				cb null
+			_.each tags, (tag)->
+				dbTag.new conn, tag, (err)->
+					if err
+						console.dir err
+					finished()
+
+###
+    archive page
+###
+exports.archive = (id, cb)->
+	sql = "UPDATE page SET state=? WHERE id=?"
+	conn = dbHelper.createConnection(dbConfig)
+	conn.update sql, [
+		dataHelper.pageState.archive
+		id
+	], ()->
+		conn.end()
+		cb.apply this,arguments
+
+###
+   search page
+###
+exports.search = (keyword, cb)->
+	sql = """
+		select *
+		from page
+		where state<> 4 and ( title like ? or title like ?)
+		order by id desc;
+		"""
+	keyword = "%#{keyword}%"
+	conn = dbHelper.createConnection(dbConfig)
+	conn.execute sql, [
+		keyword
+		keyword
+	], (err, result)->
+		conn.end()
+		cb err,result

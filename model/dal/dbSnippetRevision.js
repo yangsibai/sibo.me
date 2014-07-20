@@ -19,7 +19,10 @@
       tag = _ref[_i];
       tagNameArr.push(tag.name);
     }
-    return conn.insert(sql, [snippet.id, snippet.version, snippet.title, snippet.content, tagNameArr.join('|')], cb);
+    return conn.insert(sql, [snippet.id, snippet.version, snippet.title, snippet.content, tagNameArr.join('|')], function() {
+      conn.end();
+      return cb.apply(this, arguments);
+    });
   };
 
 }).call(this);

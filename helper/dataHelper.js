@@ -4,12 +4,22 @@
 
   _ = require("underscore");
 
+
+  /*
+      pretty print date
+   */
+
   exports.prettyDate = function(date) {
     if (_.isString(date)) {
       date = new Date(date);
     }
     return datePart(date);
   };
+
+
+  /*
+      pretty print datetime
+   */
 
   exports.prettyDateTime = function(date) {
     if (_.isString(date)) {
@@ -32,6 +42,17 @@
     h = date.getHours();
     m = date.getMinutes();
     return "" + h + ":" + m;
+  };
+
+
+  /*
+      page state
+   */
+
+  exports.pageState = {
+    inProgress: 0,
+    archive: 1,
+    "delete": 4
   };
 
 }).call(this);

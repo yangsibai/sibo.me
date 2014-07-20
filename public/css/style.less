@@ -248,6 +248,14 @@ body {
   .secondary-title {
     padding-left: 10px;
   }
+  .menu {
+    margin: @margin-2 @margin-3;
+    .menu-item {
+      cursor: pointer;
+      margin-right: @margin-3;
+      display: inline;
+    }
+  }
   .list {
     overflow: auto;
     padding: 10px 0 10px 10px;
@@ -258,7 +266,6 @@ body {
       border: 1px solid @color-border;
       margin-right: @margin-2;
       margin-bottom: @margin-2;
-      cursor: pointer;
       .page-info {
         margin: @margin-3;
         .page-title {
@@ -280,6 +287,18 @@ body {
           margin-bottom: @margin-3;
           .time {
             margin-left: @margin-4;
+          }
+          .archive {
+            width: 16px;
+            height: 16px;
+            margin-left: @margin-3;
+            display: inline-block;
+            cursor: pointer;
+            opacity: .5;
+            background: url("/img/archive.png");
+          }
+          .archive:hover {
+            opacity: 1;
           }
         }
         .pin-list {

@@ -4,20 +4,58 @@
 
   dbPin = require('../dal/dbPin');
 
+
+  /*
+      create a new pin
+   */
+
   exports["new"] = function(data, cb) {
     return dbPin["new"](data, cb);
   };
+
+
+  /*
+      get pin count on a page
+   */
 
   exports.countOnPage = function(url, cb) {
     return dbPin.countOnPage(url, cb);
   };
 
+
+  /*
+      get all pin on a page
+   */
+
   exports.pinOnPage = function(url, cb) {
     return dbPin.pinOnPage(url, cb);
   };
 
-  exports.all = function(cb) {
-    return dbPin.all(cb);
+
+  /*
+      get all pin by state
+   */
+
+  exports.all = function(state, cb) {
+    return dbPin.all(state, cb);
+  };
+
+
+  /*
+      update a page info
+   */
+
+  exports.updatePage = function(info, cb) {
+    return dbPin.updatePage(info, cb);
+  };
+
+
+  /*
+      archive page
+   */
+
+  exports.archive = function(id, cb) {
+    return dbPin.archive(id, cb);
   };
 
 }).call(this);
