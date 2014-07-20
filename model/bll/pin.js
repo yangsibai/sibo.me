@@ -58,6 +58,14 @@
     return dbPin.archive(id, cb);
   };
 
+  exports.search = function(key, cb) {
+    if (key) {
+      return dbPin.search(key, cb);
+    } else {
+      return cb(new Error("key word can't be empty"));
+    }
+  };
+
 }).call(this);
 
 //# sourceMappingURL=pin.map

@@ -35,3 +35,9 @@ exports.updatePage = (info, cb)->
 ###
 exports.archive = (id, cb)->
 	dbPin.archive id,cb
+
+exports.search=(key,cb)->
+	if key
+		dbPin.search key,cb
+	else
+		cb new Error("key word can't be empty")

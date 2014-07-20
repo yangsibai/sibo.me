@@ -38,13 +38,11 @@ body {
   a {
     color: @color-link;
     text-decoration: none;
-    text-shadow: @text-shadow;
   }
   a:hover {
     color: @color-link-hover;
     background: @color-link-hover-background;
     text-decoration: underline;
-    text-shadow: none;
   }
   p {
     margin-bottom: @margin-3;
@@ -248,12 +246,25 @@ body {
   .secondary-title {
     padding-left: 10px;
   }
-  .menu {
-    margin: @margin-2 @margin-3;
-    .menu-item {
-      cursor: pointer;
-      margin-right: @margin-3;
-      display: inline;
+  .tool-bar {
+    margin-left: @margin-3;
+    .menu {
+      float: left;
+      margin-top: @margin-3;
+      .active {
+        a {
+          color: @color-link-hover;
+          background: @color-link-hover-background;
+        }
+      }
+      .menu-item {
+        cursor: pointer;
+        margin-right: @margin-3;
+        display: inline;
+      }
+    }
+    .search {
+      float: right;
     }
   }
   .list {

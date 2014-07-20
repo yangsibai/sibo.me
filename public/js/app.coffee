@@ -26,6 +26,15 @@ app.controller("pinItCtrl", ($scope, apiHelper)->
 			else
 				alert(data.message)
 
+	$scope.search = (keyword)->
+		apiHelper.post "/pinIt/search",
+			keyword: keyword
+		, (data)->
+			if data.code is 0
+				$scope.data = data.result
+			else
+				alert(data.message)
+
 	getData(0)
 )
 
@@ -71,4 +80,16 @@ app.service('apiHelper', ($http)->
 		)
 
 	return undefined
+)
+
+app.filter('prettyTime', ()->
+	return (input)->
+		if (input)
+			date = new Date(input)
+			year = date.getFullYear()
+			month = date.getMonth() + 1
+			day = date.getDate()
+			hour = date.getHours()
+			minute = date.getMinutes()
+			return month + '/' + day + ',' + year + ' ' + hour + ':' + minute
 )

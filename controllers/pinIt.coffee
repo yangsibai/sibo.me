@@ -34,3 +34,15 @@ exports.archive_$auth = (req, res)->
 			res.err err
 		else
 			res.ok()
+
+###
+    search page
+###
+exports.search_POST=(req,res)->
+	keyword=req.body.keyword
+	pinBll.search keyword,(err,data)->
+		if err
+			res.err err
+		else
+			res.data
+				result:data

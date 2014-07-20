@@ -58,6 +58,25 @@
     });
   };
 
+
+  /*
+      search page
+   */
+
+  exports.search_POST = function(req, res) {
+    var keyword;
+    keyword = req.body.keyword;
+    return pinBll.search(keyword, function(err, data) {
+      if (err) {
+        return res.err(err);
+      } else {
+        return res.data({
+          result: data
+        });
+      }
+    });
+  };
+
 }).call(this);
 
 //# sourceMappingURL=pinIt.map

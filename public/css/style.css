@@ -11,13 +11,11 @@ body {
 body a {
   color: #3377aa;
   text-decoration: none;
-  text-shadow: 1px 1px 1px #f0f0f0;
 }
 body a:hover {
   color: #ffffff;
   background: #3377aa;
   text-decoration: underline;
-  text-shadow: none;
 }
 body p {
   margin-bottom: 10px;
@@ -192,13 +190,24 @@ body textarea:focus {
 .pin-it .secondary-title {
   padding-left: 10px;
 }
-.pin-it .menu {
-  margin: 20px 10px;
+.pin-it .tool-bar {
+  margin-left: 10px;
 }
-.pin-it .menu .menu-item {
+.pin-it .tool-bar .menu {
+  float: left;
+  margin-top: 10px;
+}
+.pin-it .tool-bar .menu .active a {
+  color: #ffffff;
+  background: #3377aa;
+}
+.pin-it .tool-bar .menu .menu-item {
   cursor: pointer;
   margin-right: 10px;
   display: inline;
+}
+.pin-it .tool-bar .search {
+  float: right;
 }
 .pin-it .list {
   overflow: auto;

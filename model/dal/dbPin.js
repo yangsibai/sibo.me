@@ -137,7 +137,7 @@
               if (page.pins.length < 3 && row.message) {
                 page.pins.push({
                   message: row.message,
-                  pinTime: dataHelper.prettyDateTime(row.pinTime)
+                  pinTime: row.pinTime
                 });
               }
               break;
@@ -148,15 +148,15 @@
               id: row.id,
               url: row.url,
               title: row.title,
-              addTime: dataHelper.prettyDateTime(row.addTime),
-              updateTime: dataHelper.prettyDateTime(row.updateTime),
+              addTime: row.addTime,
+              updateTime: row.updateTime,
               pinCount: row.pinCount,
               pins: []
             };
             if (row.message) {
               page.pins.push({
                 message: row.message,
-                pinTime: dataHelper.prettyDateTime(row.pinTime)
+                pinTime: row.pinTime
               });
             }
             pageData.push(page);

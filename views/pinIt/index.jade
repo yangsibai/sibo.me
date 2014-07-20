@@ -6,18 +6,23 @@ extends ../shared/layout_snippet
 block content
     div.pin-it(ng-controller="pinItCtrl")
         h2.secondary-title Pin It
-        ul.menu
-            li.menu-item
-                a(href="javascript:void 0;" ng-click="getData(0)") InProgress
-            li.menu-item
-                a(href="javascript:void 0;" ng-click="getData(1)") Archived
+        div.tool-bar
+            ul.menu
+                li.menu-item(ng-class="{'active':currentState===0}")
+                    a(href="javascript:void 0;" ng-click="getData(0)") InProgress
+                li.menu-item(ng-class="{'active':currentState===1}")
+                    a(href="javascript:void 0;" ng-click="getData(1)") Archived
+            div.search
+                input.keyword(type="text",ng-model="keyword")
+                input.btn(type="button",ng-click="search(keyword)",value="Search")
+        p(style="clear:left;")
         div.list
             div.pin(ng-repeat="page in data")
                 div.page-info
                     h3.page-title
                         a.link(href="{{page.url}}",target="_blank") {{page.title}}
                     div.page-description
-                        span.time {{page.addTime}}
+                        span.time {{page.addTime | prettyTime}}
                         if auth
                             span.archive(ng-click="archive($index)",ng-show="currentState===0")
         p(style="clear:left;")

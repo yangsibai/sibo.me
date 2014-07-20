@@ -35,6 +35,17 @@
         }
       });
     };
+    $scope.search = function(keyword) {
+      return apiHelper.post("/pinIt/search", {
+        keyword: keyword
+      }, function(data) {
+        if (data.code === 0) {
+          return $scope.data = data.result;
+        } else {
+          return alert(data.message);
+        }
+      });
+    };
     return getData(0);
   });
 
@@ -80,6 +91,21 @@
       });
     };
     return void 0;
+  });
+
+  app.filter('prettyTime', function() {
+    return function(input) {
+      var date, day, hour, minute, month, year;
+      if (input) {
+        date = new Date(input);
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+        hour = date.getHours();
+        minute = date.getMinutes();
+        return month + '/' + day + ',' + year + ' ' + hour + ':' + minute;
+      }
+    };
   });
 
 }).call(this);
