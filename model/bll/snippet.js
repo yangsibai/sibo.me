@@ -74,5 +74,3 @@
   };
 
 }).call(this);
-
-//# sourceMappingURL=snippet.map

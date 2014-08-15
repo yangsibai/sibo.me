@@ -67,5 +67,3 @@
   };
 
 }).call(this);
-
-//# sourceMappingURL=pin.map
