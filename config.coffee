@@ -2,7 +2,7 @@ _ = require("underscore")
 env = "dev"
 
 isProduct = exports.isProduct = ()->
-	env is "dev"
+	env is "pro"
 
 ###
     mysql config
@@ -12,10 +12,10 @@ exports.dbConfig = ()->
 		host: 'localhost',
 		user: 'root',
 		port: 3306,
-		password: ' ',
+		password: '',
 		database: "sibo"
 	else
-		host: 'localhost',
+		host: '192.168.1.88',
 		user: 'root',
 		port: 3306,
 		password: '',

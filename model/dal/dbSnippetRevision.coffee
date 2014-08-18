@@ -1,5 +1,4 @@
-dbHelper = require('mysql-dbhelper')
-dbConfig = require('../../config').dbConfig()
+dbHelper=require("./dbHelper")
 _ = require('underscore')
 
 exports.new = (snippet, cb)->
@@ -17,7 +16,7 @@ exports.new = (snippet, cb)->
 			?,?,?,?,?,now(),0
 		)
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.connect()
 	tagNameArr = []
 	for tag in snippet.tags

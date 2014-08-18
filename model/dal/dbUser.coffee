@@ -1,4 +1,4 @@
-dbHelper = require('mysql-dbhelper')
+dbHelper=require("./dbHelper")
 dbConfig = require('../../config').dbConfig()
 _ = require('underscore')
 

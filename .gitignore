@@ -2,3 +2,6 @@ node_modules/
 .idea/
 public/stylesheets/style.css
 *.zip
+*.js
+*.map
+.DS_Store

@@ -1,5 +1,4 @@
-dbHelper = require('mysql-dbhelper')
-dbConfig = require('../../config').dbConfig()
+dbHelper=require("./dbHelper")
 dbTag = require("./dbTag")
 _ = require('underscore')
 dataHelper = require('../../helper/dataHelper')
@@ -8,7 +7,7 @@ dataHelper = require('../../helper/dataHelper')
     create new pin
 ###
 exports.new = (data, cb)->
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	sql = """
 		select id
 		from page
@@ -97,7 +96,7 @@ exports.countOnPage = (url, cb)->
 		from page
 		where url=?;
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.executeScalar sql, [
 		url
 	], (err, count)->
@@ -119,7 +118,7 @@ exports.pinOnPage = (url, cb)->
 		where a.url=?
 		order by p.y,p.x;
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.execute sql, [
 		url
 	], (err, data)->
@@ -139,7 +138,7 @@ exports.all = (state, cb)->
 		WHERE a.state=?
 		order by p.id desc
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.execute sql, [
 		state
 	], (err, results)->
@@ -185,7 +184,7 @@ exports.updatePage = (info, cb)->
 		set comment=?,updateTime=now()
 		where id=?
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.update sql, [
 		info.comment
 		info.id
@@ -224,7 +223,7 @@ $insertTag = (conn, pageId, tags, cb)->
 ###
 exports.archive = (id, cb)->
 	sql = "UPDATE page SET state=? WHERE id=?"
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.update sql, [
 		dataHelper.pageState.archive
 		id
@@ -243,7 +242,7 @@ exports.search = (keyword, cb)->
 		order by id desc;
 		"""
 	keyword = "%#{keyword}%"
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.execute sql, [
 		keyword
 		keyword

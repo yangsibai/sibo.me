@@ -1,3 +1,7 @@
+###
+    管理 tag 表
+###
+
 exports.new = (conn, tag, cb)->
 	sql = "select id from tag where name=? limit 1"
 	conn.executeScalar sql, [

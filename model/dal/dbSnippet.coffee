@@ -1,4 +1,4 @@
-dbHelper = require('mysql-dbhelper')
+dbHelper = require("./dbHelper")
 dbSnippetRevision = require("./dbSnippetRevision")
 dbConfig = require('../../config').dbConfig()
 dbTag = require("./dbTag")
@@ -15,7 +15,7 @@ exports.new = (snippet, cb)->
 			?,?,?,now(),now(),1,0
 		)
 		"""
-	conn = dbHelper.createConnection dbConfig
+	conn = dbHelper.createConnection()
 	conn.insert sql, [
 		snippet.title
 		snippet.content
@@ -43,10 +43,8 @@ exports.list = (cb)->
 			from snippet
 			where state=0
 			order by id desc;"""
-	conn = dbHelper.createConnection dbConfig
-	conn.execute sql, (err, snippets)->
-		conn.end()
-		cb err, snippets
+	conn = dbHelper.createConnection()
+	conn.$execute sql, cb
 
 ###
     单条
@@ -58,7 +56,7 @@ single = exports.single = (id, cb)->
 		where id=?
 		limit 1;
 		"""
-	conn = dbHelper.createConnection dbConfig
+	conn = dbHelper.createConnection()
 	conn.executeFirstRow sql, [
 		id
 	], (err, row)->
@@ -70,10 +68,9 @@ single = exports.single = (id, cb)->
 				on st.tagId=t.id
 				where st.snippetId=?;
 				"""
-			conn.execute sql, [
+			conn.$execute sql, [
 				id
 			], (err, results)->
-				conn.end()
 				row.tags = results
 				cb err, row
 		else
@@ -92,7 +89,7 @@ exports.update = (snippet, cb)->
 				if err
 					cb err
 				else
-					conn = dbHelper.createConnection(dbConfig)
+					conn = dbHelper.createConnection()
 					sql = """
 						update snippet
 						set title=?,
@@ -119,7 +116,7 @@ exports.delete = (id, cb)->
 	sql = """
 		update snippet set state=4 where id=?
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.update sql, [
 		id
 	], (err, success)->
@@ -142,8 +139,7 @@ insertTag = (conn, snippetId, tags, cb)->
 			cb err
 		else
 			finished = _.after tags.length, ()->
-				conn.end()
-				cb err
+				cb null
 			for tag in tags
 				dbTag.new conn, tag, (err, tagId)->
 					if err

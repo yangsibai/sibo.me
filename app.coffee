@@ -6,10 +6,7 @@ http = require("http")
 path = require("path")
 config = require("./config")
 app = express()
-_=require("underscore")
-
-cluster = require('cluster')
-numCPUs = require('os').cpus().length
+_ = require("underscore")
 
 app.use express.favicon(__dirname + "/public/favicon.ico")
 app.use express.json()
@@ -30,17 +27,17 @@ app.use (req, res, next)->
 			code: 1
 			message: err.message
 
-	res.data=(data)->
+	res.data = (data)->
 		if _.isUndefined(data.code)
 			data.code = 0
 		if _.isUndefined(data.message)
-			data.message="ok"
+			data.message = "ok"
 		res.send data
 
-	res.ok=()->
+	res.ok = ()->
 		res.send
-			code:0
-			message:"ok"
+			code: 0
+			message: "ok"
 
 	next()
 
@@ -57,13 +54,5 @@ app.use (err, req, res)->
 process.on "uncaughtException", (err)->
 	console.dir(err)
 
-if cluster.isMaster
-	for i in [1..numCPUs]
-		cluster.fork()
-	cluster.on 'death', (worker)->
-		console.log "#{worker.id} dir"
-		cluster.fork()
-else
-	worker = cluster.worker
-	http.createServer(app).listen config.port.app, ->
-		console.log "worker #{worker.id} listening on port #{config.port.app}"
+http.createServer(app).listen config.port.app, ->
+	console.log "www.sibo.me listening on port #{config.port.app}"
