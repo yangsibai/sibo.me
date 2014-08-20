@@ -4,7 +4,7 @@ Module dependencies.
 express = require("express")
 http = require("http")
 path = require("path")
-config = require("./config")
+config = require("./config.json")
 app = express()
 _ = require("underscore")
 
@@ -17,9 +17,6 @@ app.use express.static(path.join(__dirname, "public"))
 
 app.use(express.cookieParser('sibo.me'));
 require("multi-process-session")(app)
-
-# development only
-app.use express.errorHandler() unless config.isProduct()
 
 app.use (req, res, next)->
 	res.err = (err)->

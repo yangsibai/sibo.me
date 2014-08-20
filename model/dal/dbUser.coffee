@@ -1,5 +1,4 @@
 dbHelper=require("./dbHelper")
-dbConfig = require('../../config').dbConfig()
 _ = require('underscore')
 
 ###
@@ -13,7 +12,7 @@ exports.auth = (email, password, cb)->
 		and password=?
 		and state =0;
 		"""
-	conn = dbHelper.createConnection(dbConfig)
+	conn = dbHelper.createConnection()
 	conn.connect()
 	conn.executeFirstRow sql, [
 		email

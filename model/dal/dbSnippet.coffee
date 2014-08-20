@@ -1,6 +1,5 @@
 dbHelper = require("./dbHelper")
 dbSnippetRevision = require("./dbSnippetRevision")
-dbConfig = require('../../config').dbConfig()
 dbTag = require("./dbTag")
 _ = require('underscore')
 
