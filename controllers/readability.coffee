@@ -24,7 +24,6 @@ exports.demo = (req, res)->
 				else
 					readability = new html_readability
 						url: url
-						debug: true
 						content: body.toString()
 					article = readability.run()
 					res.render "demo",
