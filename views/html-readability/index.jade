@@ -1,0 +1,9 @@
+extends  ../shared/article
+
+block content
+    h1 html-readability demo
+    p Choose one of the demo blow
+    ul
+        each demo in demoSites
+            li.demo
+                a(href='/html-readability/demo?url='+demo) #{demo}

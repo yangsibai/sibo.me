@@ -1,17 +1,19 @@
 {
-    "name": "sibo.me",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app.js"
-    },
-    "dependencies": {
-        "express": "3.4.7",
-        "jade": "*",
-        "simple-mvc": "~0.0.9",
-        "mysql-dbhelper": "~0.0.10",
-        "underscore": "*",
-        "marked": "*0.3.2",
-        "multi-process-session": "~0.0.5"
-    }
+  "name": "sibo.me",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "html-readability": "0.0.1",
+    "jade": "*",
+    "marked": "*0.3.2",
+    "multi-process-session": "~0.0.5",
+    "mysql-dbhelper": "~0.0.10",
+    "request": "^2.40.0",
+    "simple-mvc": "~0.0.9",
+    "underscore": "*"
+  }
 }

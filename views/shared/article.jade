@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/css/style.css')
+    body
+        div.container
+            a.main-title(href="/")
+                h1 sibo.me
+            div.nav-bar
+                a(href="/") Home
+                a(href="http://blog.sibo.me") Blog
+                a(href="/snippets/") Snippets
+                a(href="/pinIt") PinIt
+                a(href="/about") About
+            block content
