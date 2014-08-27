@@ -270,16 +270,7 @@ body textarea:focus {
   opacity: 1;
 }
 .pin-it .list .pin .page-info .page-description .readability {
-  width: 16px;
-  height: 16px;
-  margin-left: 10px;
-  display: inline-block;
-  cursor: pointer;
-  opacity: .5;
-  background: url("/img/glass.png");
-}
-.pin-it .list .pin .page-info .page-description .readability:hover {
-  opacity: 1;
+  margin-left: t 10px;
 }
 .pin-it .list .pin .page-info .pin-list .pin-item .message {
   font-size: 16px;
