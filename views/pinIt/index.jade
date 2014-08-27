@@ -23,7 +23,7 @@ block content
                         a.link(href="{{page.url}}",target="_blank") {{page.title}}
                     div.page-description
                         span.time {{page.addTime | prettyTime}}
+                        a(href="/readability/demo?url={{page.url}}",target="_blank") R
                         if auth
                             span.archive(ng-click="archive($index)",ng-show="currentState===0")
-                        a(href="/readability/demo?url={{page.url}}",target="_blank") R
         p(style="clear:left;")
