@@ -12,9 +12,7 @@ exports.index = (req, res)->
 		demoSites: demoSites
 
 exports.demo = (req, res)->
-	console.log "demo"
 	url = req.query.url
-	console.log url
 	if url
 		try
 			url = decodeURIComponent(url)

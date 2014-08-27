@@ -269,6 +269,18 @@ body textarea:focus {
 .pin-it .list .pin .page-info .page-description .archive:hover {
   opacity: 1;
 }
+.pin-it .list .pin .page-info .page-description .readability {
+  width: 16px;
+  height: 16px;
+  margin-left: 10px;
+  display: inline-block;
+  cursor: pointer;
+  opacity: .5;
+  background: url("/img/glass.png");
+}
+.pin-it .list .pin .page-info .page-description .readability:hover {
+  opacity: 1;
+}
 .pin-it .list .pin .page-info .pin-list .pin-item .message {
   font-size: 16px;
   margin-right: 10px;
@@ -281,4 +293,31 @@ body textarea:focus {
 }
 .pin-it .list .pin:hover {
   box-shadow: 0px 0px 10px #4e78ff;
+}
+.readability .title {
+  font-size: 30px;
+}
+.readability div h2 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+.readability .choose {
+  margin-bottom: 40px;
+}
+.readability .choose li {
+  margin: 5px 0;
+}
+.readability .typein form input {
+  font-size: 16px;
+  width: 400px;
+  height: 24px;
+  padding: 0 5px;
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid #aaaaaa;
+}
+.readability .typein form button {
+  margin-top: 5px;
+  height: 20px;
+  width: 80px;
 }

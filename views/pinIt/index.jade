@@ -25,4 +25,6 @@ block content
                         span.time {{page.addTime | prettyTime}}
                         if auth
                             span.archive(ng-click="archive($index)",ng-show="currentState===0")
+                        a(href="/readability/demo?url{{page.url}}",target="_blank")
+                            span.readability
         p(style="clear:left;")

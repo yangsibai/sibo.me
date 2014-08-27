@@ -1,9 +1,17 @@
 extends  ../shared/article
 
 block content
-    h1 html-readability demo
-    p Choose one of the demo blow
-    ul
-        each demo in demoSites
-            li.demo
-                a(href='/readability/demo?url='+demo) #{demo}
+    div.readability
+        h1.title html-readability demo
+        div.choose
+            h2.subtitle Choose one of the demo blow
+            ul
+                each demo in demoSites
+                    li.demo
+                        a(href='/readability/demo?url='+demo) #{demo}
+        div.typein
+            h2.subtitle You can also submit a URL to resolve:
+            form(method="get",action="/readability/demo")
+                input(placeholder="url",name="url")
+                div.btn
+                    button(type="submit") Readability
