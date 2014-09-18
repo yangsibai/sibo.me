@@ -4,14 +4,20 @@
 extends ../shared/layout
 
 block content
-    div.contact
-        p
-            | I'm massimo, a web developer.
-        p
-            | Github:
-            a(href="https://github.com/yangsibai") @yangsibai
-        p
-            | Twitter:
-            a(href="https://twitter.com/massimoyang") @massimoyang
-        p
-            | Email: yangsibai@gmail.com
+    div.about-me
+        div
+            p
+                | I'm massimo, a web developer.
+        div.github
+            p
+                | Github:
+                a(href="https://github.com/yangsibai") @yangsibai
+            div
+                iframe(src="http://githubbadge.appspot.com/yangsibai",style="border:0;height:142px;width:200px;overflow:hidden;",frameBorder="0")
+        div.twitter
+            p
+                | Twitter:
+                a(href="https://twitter.com/massimoyang") @massimoyang
+        div.email
+            p
+                | Email: yangsibai@gmail.com
