@@ -17,7 +17,7 @@ app.use express.methodOverride()
 app.use app.router
 app.use express.static(p2r.path("public"))
 
-app.use(express.cookieParser('sibo.me'));
+app.use(express.cookieParser('sibo.me'))
 require("multi-process-session")(app)
 
 app.use (req, res, next)->

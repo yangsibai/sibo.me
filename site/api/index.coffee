@@ -13,7 +13,7 @@ app.use express.urlencoded()
 app.use express.methodOverride()
 app.use app.router
 
-app.use(express.cookieParser('sibo.me'));
+app.use(express.cookieParser('sibo.me'))
 require("simple-mvc")
     controllerPath: "/site/api/controllers"
     filter: p2r.require("filter"), app
