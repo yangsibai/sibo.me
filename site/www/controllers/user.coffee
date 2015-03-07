@@ -1,4 +1,4 @@
-userBll = require("../model/bll/user")
+userBll = require("../../../model/bll/user")
 
 
 exports.login_GET_POST = (req, res)->

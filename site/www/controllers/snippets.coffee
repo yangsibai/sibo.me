@@ -1,5 +1,5 @@
-snippetBll = require('../model/bll/snippet')
-dataHelper = require('../helper/dataHelper')
+snippetBll = require('../../../model/bll/snippet')
+dataHelper = require('../../../helper/dataHelper')
 
 exports.$mvcConfig =
 	route:

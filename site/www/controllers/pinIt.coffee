@@ -1,5 +1,5 @@
-pinBll = require("../model/bll/pin")
-dataHelper = require("../helper/dataHelper")
+pinBll = require("../../../model/bll/pin")
+dataHelper = require("../../../helper/dataHelper")
 
 exports.index = (req, res)->
 	pinBll.all dataHelper.pageState.inProgress, (err, pageData)->

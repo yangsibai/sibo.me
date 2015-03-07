@@ -12,6 +12,7 @@
     "marked": "*0.3.2",
     "multi-process-session": "~0.0.5",
     "mysql-dbhelper": "~0.0.10",
+    "p2r": "^0.3.0",
     "request": "^2.40.0",
     "simple-mvc": "~0.1.0",
     "underscore": "*"

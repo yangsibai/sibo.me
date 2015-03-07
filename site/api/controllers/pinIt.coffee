@@ -1,4 +1,4 @@
-pinBll = require('../model/bll/pin')
+pinBll = require('../../../model/bll/pin')
 
 exports.new_POST = (req, res)->
 	data = req.body
