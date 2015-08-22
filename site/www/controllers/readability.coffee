@@ -1,4 +1,4 @@
-html_readability = require("html-readability")
+#html_readability = require("html-readability")
 request = require("request")
 
 exports.index = (req, res)->
